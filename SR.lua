@@ -26,40 +26,112 @@ _SETTINGS:SetPlayerMenuOff()
 ----- LOTNISKOWCE -----
 ----- B1 Roosevelt
 --RESCUE HELO
-B1Roosevelt_rescuehelo=RESCUEHELO:New("CVN-71 Theodore Roosevelt", "B1 Roosevelt Guard")
+B1Roosevelt_rescuehelo=RESCUEHELO:New("CVN-71 Theodore Roosevelt", "CSAR Guard SH-60B")
 B1Roosevelt_rescuehelo:SetHomeBase(AIRBASE:FindByName("CVN-71 Theodore Roosevelt")) -- wybrany okręt
 B1Roosevelt_rescuehelo:SetModex(71)
 B1Roosevelt_rescuehelo:__Start(1)
 
 ----- B2 Tarawa
 --RESCUE HELO
-B2Tarawa_rescuehelo=RESCUEHELO:New("LHA-1 Tarawa", "B2 Tarawa Guard")
+B2Tarawa_rescuehelo=RESCUEHELO:New("LHA-1 Tarawa", "CSAR Guard SH-60B")
 B2Tarawa_rescuehelo:SetHomeBase(AIRBASE:FindByName("LHA-1 Tarawa")) -- wybrany okręt
 B2Tarawa_rescuehelo:SetModex(71)
 B2Tarawa_rescuehelo:__Start(1)
 
 ----- B3 Kuzniecov
 --RESCUE HELO
-B3Kuzniecov_rescuehelo=RESCUEHELO:New("CV 1143.5 Admiral Kuznietsov", "B3 Kuzniecov Guard")
+B3Kuzniecov_rescuehelo=RESCUEHELO:New("CV 1143.5 Admiral Kuznietsov", "CSAR Guard Ka-27")
 B3Kuzniecov_rescuehelo:SetHomeBase(AIRBASE:FindByName("CV 1143.5 Admiral Kuznietsov")) -- wybrany okręt
 B3Kuzniecov_rescuehelo:SetModex(71)
 B3Kuzniecov_rescuehelo:__Start(1)
 
 
-
---A2A NAZIEMNE -----------------------------------------------------------------------------------------------------------------
+-- CYPR		 -----------------------------------------------------------------------------------------------------------------
+--A2A NAZIEMNE ---------------------------------------------------------------------------------------------
 
 function Poligon_A2A_01_Spawner()
-	local A1= SPAWN:New( "A2A Cypr Naziemne 01" ):Spawn()
-	local A2= SPAWN:New( "A2A Cypr Naziemne 02" ):Spawn()
-	local A3= SPAWN:New( "A2A Cypr Naziemne 03" ):Spawn()
-	local A4= SPAWN:New( "A2A Cypr Naziemne 04" ):Spawn()
-	local A5= SPAWN:New( "A2A Cypr Naziemne 05" ):Spawn()
-	local A6= SPAWN:New( "A2A Cypr Naziemne 06" ):Spawn()
-	local A7= SPAWN:New( "A2A Cypr Naziemne 07" ):Spawn()
+	local A1= SPAWN:New( "A2A Cypr Naziemne RED 01" ):Spawn()
+	local A2= SPAWN:New( "A2A Cypr Naziemne RED 02" ):Spawn()
+	local A3= SPAWN:New( "A2A Cypr Naziemne RED 03" ):Spawn()
+	local A4= SPAWN:New( "A2A Cypr Naziemne RED 04" ):Spawn()
+	local A5= SPAWN:New( "A2A Cypr Naziemne RED 05" ):Spawn()
+	local A6= SPAWN:New( "A2A Cypr Naziemne RED 06" ):Spawn()
+	local A7= SPAWN:New( "A2A Cypr Naziemne RED 07" ):Spawn()
 	local AB1= SPAWN:New( "A2A Cypr Naziemne Blue 01" ):Spawn()
 end
 Poligon_A2A_01_Spawner()
+
+--A2A NAZIEMNE ---------------------------------------------------------------------------------------------
+
+	Cypr_CAP_Zone = ZONE_POLYGON:New( "Red Cypr Border", GROUP:FindByName( "Red CAP Cypr Border" ) )
+
+	Cypr_Detection_Units = SET_GROUP:New()
+	Cypr_Detection_Units:FilterPrefixes( { "A2A Cypr Naziemne RED"} )
+	Cypr_Detection_Units:FilterStart()
+	Cypr_CAP_Detection = DETECTION_AREAS:New( Cypr_Detection_Units, 300000 )
+	
+	Cypr_CAP = AI_A2A_DISPATCHER:New( Cypr_CAP_Detection )
+	Cypr_CAP:SetBorderZone( Cypr_CAP_Zone )
+
+	Cypr_CAP:SetSquadron( "Paphos CAP", AIRBASE.Syria.Paphos, {"RED F-14A CAP", "RED MiG-31 CAP"})
+	Cypr_CAP:SetSquadronCap( "Paphos CAP", Cypr_CAP_Zone, UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(320), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(900), "BARO" )
+	--Cypr_CAP:SetSquadronCapRacetrack( "Paphos CAP", UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), 240, 60, 20*60, 40*60)
+	Cypr_CAP:SetSquadronCapInterval( "Paphos CAP", 2, 30, 90, 1 )
+	--Cypr_CAP:SetSquadronGci( "Paphos CAP", 900, 1200 )
+
+	Cypr_CAP:SetSquadron( "Gecitkale CAP", AIRBASE.Syria.Gecitkale, {"RED F-14A CAP", "RED MiG-31 CAP"})
+	Cypr_CAP:SetSquadronCap( "Gecitkale CAP", Cypr_CAP_Zone, UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(320), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(900), "BARO" )
+	--Cypr_CAP:SetSquadronCapRacetrack( "Gecitkale CAP", UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), 240, 60, 20*60, 40*60)
+	Cypr_CAP:SetSquadronCapInterval( "Gecitkale CAP", 2, 30, 90, 1 )
+	--Cypr_CAP:SetSquadronGci( "Gecitkale CAP", 900, 1200 )
+
+	Cypr_CAP:SetSquadron( "Pinarbashi CAP", AIRBASE.Syria.Pinarbashi, {"RED MiG-23 CAP", "RED MiG-29 CAP"})
+	--Cypr_CAP:SetSquadronCap( "Pinarbashi CAP", Cypr_CAP_Zone, UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(320), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(900), "BARO" )
+	--Cypr_CAP:SetSquadronCapRacetrack( "Pinarbashi CAP", UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), 240, 60, 20*60, 40*60)
+	--Cypr_CAP:SetSquadronCapInterval( "Pinarbashi CAP", 2, 30, 90, 1 )
+	Cypr_CAP:SetSquadronGci( "Pinarbashi CAP", 900, 1200 )
+
+	Cypr_CAP:SetSquadron( "Akrotiri CAP", AIRBASE.Syria.Akrotiri, {"RED MiG-23 CAP", "RED MiG-29 CAP"})
+	--Cypr_CAP:SetSquadronCap( "Akrotiri CAP", Cypr_CAP_Zone, UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(320), UTILS.KnotsToKmph(270), UTILS.KnotsToKmph(900), "BARO" )
+	--Cypr_CAP:SetSquadronCapRacetrack( "Akrotiri CAP", UTILS.FeetToMeters(21000), UTILS.FeetToMeters(27000), 240, 60, 20*60, 40*60)
+	--Cypr_CAP:SetSquadronCapInterval( "Akrotiri CAP", 2, 30, 90, 1 )
+	Cypr_CAP:SetSquadronGci( "Akrotiri CAP", 900, 1200 )
+	
+	
+	Cypr_CAP:SetDefaultOverhead(1.25)
+	Cypr_CAP:SetEngageRadius(100000)
+	Cypr_CAP:SetDefaultTakeoffFromParkingHot()
+	Cypr_CAP:SetDefaultLandingNearAirbase()
+	Cypr_CAP:SetDefaultFuelThreshold(0.20)
+	Cypr_CAP:SetDefaultGrouping(2)
+	Cypr_CAP:SetDefaultDamageThreshold( 0.90 )
+	Cypr_CAP:SetDefaultCapLimit(6)
+	Cypr_CAP:SetGciRadius( 125000 )
+	
+	Cypr_CAP:SetTacticalDisplay( false )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 --A2A POLIGONY -----------------------------------------------------------------------------------------------------------------
 
